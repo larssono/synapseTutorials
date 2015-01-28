@@ -46,7 +46,7 @@ plotFileEntity = synStore(plotFileEntity)
 #### Add provenance describing how plot was created:
 ```{r}
 plotFileEntity = synStore(plotFileEntity, 
-                          executed='https://github.com/larssono/synapseTutorials/blob/master/R/1.Synapse_R_API_demo.Rmd', 
+                          executed='https://github.com/larssono/synapseTutorials/blob/PEC_demo/R/1.Synapse_R_API_demo.Rmd', 
                           activityName="plot distributions", 
                           activityDescription="Generate histograms for demo",forceVersion=F)
 ```
@@ -55,7 +55,14 @@ plotFileEntity = synStore(plotFileEntity,
 ```{r}
 #library(devtools)
 #source_gist("https://gist.github.com/brian-bot/6117476")
-#thisFile <- "~/dev/synapseTutorials/R/1.Synapse_R_API_demo.Rmd"
-# knit2synapse(thisFile, myProject, overwrite = T)
+#thisFile <- "~/synapseTutorials/R/1.Synapse_R_API_demo.Rmd"
+# knit2synapse(thisFile, plotFileEntity, overwrite = T)
 ```
+
+#### Since this is demo we can delete the created folder and files
+```{r}
+#synDelete(myFolder)
+```
+
+
 
