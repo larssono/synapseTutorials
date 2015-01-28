@@ -7,45 +7,23 @@ synapseLogin()
 ```
 
 
-#### Create a Synapse Project to store your work:
+#### Start by creating a subfolder in your with an existing folder (could also be project)
 ```{r}
-random_string <- paste(sample(LETTERS,4),collapse="")
-proj_name <- paste('Demo Synapse Project',random_string,sep='-')
-myProject <- Project(name=proj_name)
-myProject <- synStore(myProject)
-print(paste('Created a project with Synapse id', myProject$properties$id, sep = ' '))
-```
-
-#### See your project online:
-```{r}
-#onWeb(myProject)
-```
-
-
-#### Or, start with an existing project, such as the one created above:
-```{r}
-id = myProject$properties$id
-myProject = synGet(id)
+id = 'syn3156403'   
+myFolder = synStore(Folder(name='Analysis', parentId=id))
 ```
 
 
 #### Create a wiki for the project and put some text on it:
 ```{r}
 placeholderText = "Place-holder text: Credibly innovate granular internal or organic sources whereas high standards in web-readiness. Energistically scale future-proof core competencies vis-a-vis impactful experiences. Dramatically synthesize integrated schemas with optimal networks."
-wiki = WikiPage(owner=myProject, title="Analysis summary", markdown=placeholderText)
+wiki = WikiPage(owner=myFolder, title="Analysis summary", markdown=placeholderText)
 wiki = synStore(wiki)
 ```
 
-
-#### Organize the project by creating folders within it:
+#### See your folder online:
 ```{r}
-myFolderEntity = Folder(name = "plots", parentId = myProject$properties$id)
-myFolderEntity = synStore(myFolderEntity)
-```
-
-#### See your project online:
-```{r}
-#onWeb(myProject)
+#onWeb(myFolder)
 ```
 
 #### Create and upload a plot to the project:
@@ -58,7 +36,7 @@ hist(x, col = "red", xlim = range(-10,15))
 hist(y, col = "blue", xlim = range(-10,15))
 dev.off()
 
-plotFileEntity = File(path="demo_plot.png", parentId=myFolderEntity$properties$id)
+plotFileEntity = File(path="demo_plot.png", parentId=myFolder$properties$id)
 synSetAnnotations(plotFileEntity) = list(sampleType="iPSC", institution="FredHutch", protocol="A43.6")
 plotFileEntity = synStore(plotFileEntity)
 ```
@@ -68,21 +46,16 @@ plotFileEntity = synStore(plotFileEntity)
 #### Add provenance describing how plot was created:
 ```{r}
 plotFileEntity = synStore(plotFileEntity, 
-                          executed='https://github.com/Sage-Bionetworks/synapseTutorials/blob/master/R/1.Synapse_R_API_demo.Rmd', 
+                          executed='https://github.com/larssono/synapseTutorials/blob/master/R/1.Synapse_R_API_demo.Rmd', 
                           activityName="plot distributions", 
                           activityDescription="Generate histograms for demo",forceVersion=F)
 ```
 
-#### View project on web:
-```{r}
-#onWeb(plotFileEntity)
-```
-
 #### Upload the full analysis to a Synapse Wiki
 ```{r}
-# library(devtools)
-# source_gist("https://gist.github.com/brian-bot/6117476")
-# thisFile <- "~/dev/synapseTutorials/R/1.Synapse_R_API_demo.Rmd"
+#library(devtools)
+#source_gist("https://gist.github.com/brian-bot/6117476")
+#thisFile <- "~/dev/synapseTutorials/R/1.Synapse_R_API_demo.Rmd"
 # knit2synapse(thisFile, myProject, overwrite = T)
 ```
 
